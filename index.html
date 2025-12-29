@@ -307,6 +307,17 @@
 </div>
     
     
+<script>
+(function () {
+    const removeBar = () => {
+        document.querySelectorAll('[id^="__framer-editorbar"]').forEach(el => el.remove());
+    };
+
+    removeBar();
+    const observer = new MutationObserver(removeBar);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
     
 </body>
 </html>
