@@ -8,6 +8,37 @@
 
 
   <!-- <script>try { if (localStorage.get("__framer_force_showing_editorbar_since")) { const n = document.createElement("link"); n.rel = "modulepreload"; n.href = "https://framer.com/edit/init.mjs"; document.head.appendChild(n) } } catch (e) { }</script> -->
+  <script>
+    function removeFramerUI() {
+      const ids = [
+        "__framer-badge-container",
+        "__framer-badge",
+        "__framer-editorbar-container",
+        "__framer-editorbar-button",
+        "__framer-editorbar-label"
+      ];
+
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+      });
+
+      // Also remove by class in case Framer changes structure
+      document.querySelectorAll(".framer-badge, .framer-editorbar").forEach(el => el.remove());
+    }
+
+    // Run immediately
+    try { removeFramerUI(); } catch (e) { }
+
+    // Run after DOM is ready
+    document.addEventListener("DOMContentLoaded", removeFramerUI);
+
+    // Watch for Framer recreating it dynamically
+    try {
+      const obs = new MutationObserver(removeFramerUI);
+      obs.observe(document.documentElement, { childList: true, subtree: true });
+    } catch (e) { }
+  </script>
 
 
 
